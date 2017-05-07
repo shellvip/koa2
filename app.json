@@ -1,0 +1,11 @@
+{
+  "name": "koa2 demo",
+  "description": "Node + Koa 2.x + Nedb app",
+  "repository": "https://github.com/shellvip/koa2",
+  "keywords": ["node", "koa", "boilerplate"],
+  "website": "https://github.com/shellvip",
+  "buildpacks": [{ "url": "heroku/nodejs" }],
+  "env": {
+    "NODE_ENV": { "value": "production" }
+  }
+}
