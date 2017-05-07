@@ -7,7 +7,7 @@
     "url": "https://github.com/shellvip/koa2"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
     "deploy": "git push heroku master"
   },
   "engines": {
