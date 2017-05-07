@@ -63,8 +63,7 @@
     <div class="container">
       <!-- Display flash message -->
       {% if ctx.flash and ctx.flash.message %}
-        <div class="alert alert-{{ ctx.flash.message[0] }}"
-             role="alert">
+        <div class="alert alert-{{ ctx.flash.message[0] }}"  role="alert">
           {{ ctx.flash.message[1] }}
         </div>
       {% endif %}
@@ -74,13 +73,13 @@
       <div class="footer text-muted text-center">
         <hr>
         <p>
-          &copy; 2015
+          &copy; 2017
           &mdash;
-          Source on <a href="https://github.com/danneu/koa-skeleton">Github</a>
+          Source on <a href="https://github.com/shellvip/koa2">Github</a>
           &mdash;
           Cute skeleton icon from <a href="https://www.reddit.com/r/PixelArt/comments/100tkt/two_weeks_ago_i_posted_50_mini_roleplay_adventure/">svh440</a>
           &mdash;
-          Demo by <a href="https://www.danneu.com">danneu</a>
+          Demo by <a href="https://github.com/shellvip">danneu</a>
         </p>
       </div>
     </div><!-- /.container -->
