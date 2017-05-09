@@ -6,7 +6,7 @@ const Nedb = require('nedb');
 var nedb = new Nedb({ filename: path.join(__dirname, 'db', 'user.db'), autoload: true });
 nedb.ensureIndex({ fieldName: 'uname', unique: true });
 //nedb.ensureIndex({ fieldName: 'email', unique: true });
-
+nedb.persistence.setAutocompactionInterval(1000*60*60*6);
 let User = nedbP.fromInstance(nedb);
 
 const user_role = ['ADMIN', 'MOD', 'MEMBER', 'BANNED'];
