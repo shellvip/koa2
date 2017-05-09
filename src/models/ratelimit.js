@@ -3,7 +3,7 @@ const path = require('path');
 const Nedb = require('nedb');
 
 var nedb = new Nedb({ filename: path.join(__dirname, 'db', 'ratelimit.db'), autoload: true });
-
+nedb.persistence.setAutocompactionInterval(1000*60*60*6);
 let Ratelimit = nedbP.fromInstance(nedb);
 
 Ratelimit.insertRatelimit = async (obj) => {
