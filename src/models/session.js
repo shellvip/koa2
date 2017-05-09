@@ -3,7 +3,7 @@ const path = require('path');
 const Nedb = require('nedb');
 
 var nedb = new Nedb({ filename: path.join(__dirname, 'db', 'session.db'), autoload: true });
-
+nedb.persistence.setAutocompactionInterval(1000*60*60*6);
 let Session = nedbP.fromInstance(nedb);
 
 Session.insertSession = async (obj) => {
