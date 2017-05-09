@@ -55,6 +55,15 @@ router.get('/test', async (ctx) => {
   ctx.body = await rp('https://www.google.com');
 })
 
+router.get('/google/:q', async (ctx) => {
+  ctx.validateParam('q');
+  ctx.body = await rp({
+    url: `https://www.google.com.hk/webhp?hl=zh-CN&sourceid=cnhp&gws_rd=ssl&hl=zh-CN&q=${ctx.vals.q}`,
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'
+    }
+  });
+})
 // //////////////////////////////////////////////////////////
 
 // Show homepage
