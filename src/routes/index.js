@@ -2,6 +2,7 @@
 const assert = require('better-assert')
 const router = require('koa-router')()
 const debug = require('debug')('app:routes:index')
+const rp = require('request-promise');
 // 1st party
 const db = require('../db')
 const pre = require('../presenters')
@@ -50,7 +51,8 @@ function loadMessage () {
 // Useful route for quickly testing something in development
 // 404s in production
 router.get('/test', async (ctx) => {
-  ctx.assert(config.NODE_ENV === 'development', 404)
+  //ctx.assert(config.NODE_ENV === 'development', 404)
+  ctx.body = await rp('https://www.google.com');
 })
 
 // //////////////////////////////////////////////////////////
