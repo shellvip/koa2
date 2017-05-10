@@ -55,7 +55,7 @@ router.get('/test', async (ctx) => {
 })
 
 router.get('/gif', async (ctx) => {
-  await ctx.render('gif');
+  await ctx.render('gif', {time: new Date().toString()});
 })
 
 // //////////////////////////////////////////////////////////

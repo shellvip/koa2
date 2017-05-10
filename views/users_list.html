@@ -58,13 +58,13 @@
           {# created_at #}
           <td>
             <abbr class="timeago" title="{{ user.created_at|formatDate }}">
-              {{ user.created_at|formatDate }}
+              {{ user.created_at|fromNow }}
             </abbr>
           </td>
           {# last_online_at #}
           <td>
             <abbr class="timeago" title="{{ user.last_online_at|formatDate }}">
-              {{ user.last_online_at|formatDate }}
+              {{ user.last_online_at|fromNow }}
             </abbr>
           </td>
           {# role #}

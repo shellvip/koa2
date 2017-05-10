@@ -48,7 +48,8 @@ const nunjucksOptions = {
   // e.g. {{ user.uname | md5 | toAvatarUrl }}
   filters: {
     json: x => JSON.stringify(x, null, '  '),
-    formatDate: (time) => moment(new Date(time)).fromNow(),
+    fromNow: (time) => moment(new Date(time)).fromNow(),
+    formatDate: (time) => moment(new Date(time)).format('lll'),
     nl2br: belt.nl2br,
     md5: belt.md5,
     toAvatarUrl: belt.toAvatarUrl,
