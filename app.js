@@ -5,7 +5,7 @@ const requestSelf = async ()=>{
     await rp('https://appsc.herokuapp.com');
 };
 
-schedule.scheduleJob('30 */5 0-1,9-23 * * *', () => {
+schedule.scheduleJob('30 */5 1-17 * * *', () => {
     requestSelf();
 });
 
