@@ -25,7 +25,7 @@
         {% endif %}
 
         <small class="text-muted">
-          <abbr class="timeago" title="{{ message.created_at | formatDate}}">
+          <abbr title="{{ message.created_at | formatDate}}">
             {{ message.created_at | fromNow }}
           </abbr>
           by
