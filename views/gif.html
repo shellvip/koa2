@@ -1,3 +1,5 @@
+{% import 'macros.html' as macros %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/css/160425_techGif.min.css">
+  <link href="/vendor/bootstrap-3.3.5/css/bootstrap.min.css" type="text/css" rel="stylesheet">
   <title>gif</title>
 </head>
 
@@ -15,7 +18,7 @@
       <h1 class="gif_tag_name" id="gif_tag_name" style="display: none;"><em></em></h1>
       <div class="gif_feed">
         <div class="gif_feed_wrap" id="gif_feed_wrap" data-sudaclick="feed_list">
-
+          {{ macros.renderPaginator(paginator) }}
           {% for gif in gifs %}
           <div class="gif_feed_box">
             <h2><a href="{{ gif.img_src }}" target="_blank">{{gif.name}}</a></h2>
@@ -25,6 +28,7 @@
 
           </div>
           {% endfor %}
+          {{ macros.renderPaginator(paginator) }}
 
         </div>
       </div>

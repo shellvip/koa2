@@ -56,7 +56,7 @@ router.get('/test', async (ctx) => {
   // ctx.assert(config.NODE_ENV === 'development', 404)
   try {
     await Gif.remove({}, { multi: true });
-    var data = await rp('http://platform.sina.com.cn/slide/album?app_key=2733610594&format=json&ch_id=77&num=20&page=1');
+    var data = await rp('http://platform.sina.com.cn/slide/album?app_key=2733610594&format=json&ch_id=77&num=200&page=1');
     var gifs = JSON.parse(data);
     if (gifs.status.code == '0') {
       for (var gif of gifs.data) {
@@ -77,8 +77,20 @@ router.get('/test', async (ctx) => {
 })
 
 router.get('/gif', async (ctx) => {
-  let gifs = await Gif.cfind({}).sort({ id: -1 }).limit(20).exec();
-  await ctx.render('gif', { gifs });
+  ctx.validateQuery('page')
+    .defaultTo(1)
+    .toInt();
+
+  const page = ctx.vals.page;
+  const perPage = config.MESSAGES_PER_PAGE
+  const offset = (page - 1) * perPage
+  const limit = perPage
+
+  var count = await Gif.count({});
+  const paginator = paginate.makePaginator(page, count)
+
+  let gifs = await Gif.cfind({}).sort({ id: -1 }).skip(offset).limit(limit).exec();
+  await ctx.render('gif', { gifs, paginator });
 })
 
 // //////////////////////////////////////////////////////////
