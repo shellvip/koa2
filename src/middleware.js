@@ -3,7 +3,7 @@ const nodeUrl = require('url')
 // 3rd
 const debug = require('debug')('app:middleware')
 const bouncer = require('koa-bouncer')
-const recaptcha = require('recaptcha-validator')
+//const recaptcha = require('recaptcha-validator')
 // 1st
 const db = require('./db')
 const config = require('./config')
@@ -143,14 +143,14 @@ exports.ensureRecaptcha = function () {
       .isString()
       .checkPred(s => s.length > 0, 'You must attempt the human test')
 
-    try {
-      await recaptcha.promise(config.RECAPTCHA_SITESECRET, ctx.vals['g-recaptcha-response'], ctx.request.ip)
-    } catch (err) {
-      console.warn('Got invalid captcha: ', ctx.vals['g-recaptcha-response'], err)
-      ctx.validateBody('g-recaptcha-response')
-        .check(false, 'Could not verify recaptcha was correct')
-      return
-    }
+    // try {
+    //   await recaptcha.promise(config.RECAPTCHA_SITESECRET, ctx.vals['g-recaptcha-response'], ctx.request.ip)
+    // } catch (err) {
+    //   console.warn('Got invalid captcha: ', ctx.vals['g-recaptcha-response'], err)
+    //   ctx.validateBody('g-recaptcha-response')
+    //     .check(false, 'Could not verify recaptcha was correct')
+    //   return
+    // }
 
     await next()
   }

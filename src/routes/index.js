@@ -12,6 +12,8 @@ const belt = require('../belt')
 const paginate = require('../paginate')
 const cache = require('../cache')
 
+const Gif = require('../models/gif')
+
 //
 // The index.js routes file is mostly a junk drawer for miscellaneous
 // routes until it's accumulated enough routes to warrant a new
@@ -22,7 +24,7 @@ const cache = require('../cache')
 
 // expects /:uname param in url
 // sets ctx.state.user
-function loadUser () {
+function loadUser() {
   return async (ctx, next) => {
     ctx.validateParam('uname')
     const user = await db.getUserByUname(ctx.vals.uname)
@@ -35,7 +37,7 @@ function loadUser () {
 
 // expects /:message_id param in url
 // sets ctx.state.message
-function loadMessage () {
+function loadMessage() {
   return async (ctx, next) => {
     ctx.validateParam('message_id')
     const message = await db.getMessageById(ctx.vals.message_id)
@@ -51,11 +53,32 @@ function loadMessage () {
 // Useful route for quickly testing something in development
 // 404s in production
 router.get('/test', async (ctx) => {
-  ctx.assert(config.NODE_ENV === 'development', 404)
+  // ctx.assert(config.NODE_ENV === 'development', 404)
+  try {
+    await Gif.remove({}, { multi: true });
+    var data = await rp('http://platform.sina.com.cn/slide/album?app_key=2733610594&format=json&ch_id=77&num=20&page=1');
+    var gifs = JSON.parse(data);
+    if (gifs.status.code == '0') {
+      for (var gif of gifs.data) {
+        var p = gif.img_url.split('/'),
+            q = p.length;
+        var imgSrc = "http://storage.slide.news.sina.com.cn/slidenews/77_ori/" + p[q - 2] + "/" + p[q - 1];
+
+        await Gif.insertGif({
+          id: gif.id,
+          name: gif.name,
+          img_src: imgSrc
+        });
+      }
+    }
+  } catch (error) {
+
+  }
 })
 
 router.get('/gif', async (ctx) => {
-  await ctx.render('gif', {time: new Date().toString()});
+  let gifs = await Gif.cfind({}).sort({ id: -1 }).limit(20).exec();
+  await ctx.render('gif', { gifs });
 })
 
 // //////////////////////////////////////////////////////////
@@ -79,7 +102,7 @@ router.get('/', async (ctx) => {
 // - email: Optional String
 // - role: Optional String
 router.put('/users/:uname', loadUser(), async (ctx) => {
-  const {user} = ctx.state
+  const { user } = ctx.state
   ctx.assertAuthorized(ctx.currUser, 'UPDATE_USER_*', user)
   // VALIDATION
   if (ctx.request.body.role) {
@@ -111,7 +134,7 @@ router.put('/users/:uname', loadUser(), async (ctx) => {
 
 // Edit user page
 router.get('/users/:uname/edit', loadUser(), async (ctx) => {
-  const {user} = ctx.state
+  const { user } = ctx.state
   ctx.assertAuthorized(ctx.currUser, 'UPDATE_USER_*', user)
   await ctx.render('users_edit', {
     ctx: ctx,
@@ -124,7 +147,7 @@ router.get('/users/:uname/edit', loadUser(), async (ctx) => {
 
 // Show user profile
 router.get('/users/:uname', loadUser(), async (ctx) => {
-  const {user} = ctx.state
+  const { user } = ctx.state
   const messages = await db.getRecentMessagesForUserId(user._id)
   messages.forEach(pre.presentMessage)
   await ctx.render('users_show', {
@@ -213,7 +236,7 @@ router.get('/users', async (ctx) => {
 // - markup: Optional String
 // - redirectTo: Optional String
 router.put('/messages/:message_id', loadMessage(), async (ctx) => {
-  const {message} = ctx.state
+  const { message } = ctx.state
   // AUTHZ: Ensure user is authorized to make *any* update to message
   ctx.assertAuthorized(ctx.currUser, 'UPDATE_MESSAGE', message)
   if (ctx.request.body.is_hidden) {
@@ -253,7 +276,7 @@ router.put('/messages/:message_id', loadMessage(), async (ctx) => {
 // Body:
 // - role: String
 router.put('/users/:uname/role', loadUser(), async (ctx) => {
-  const {user} = ctx.state
+  const { user } = ctx.state
   // AUTHZ
   ctx.assertAuthorized(ctx.currUser, 'UPDATE_USER_ROLE', user)
   // VALIDATE

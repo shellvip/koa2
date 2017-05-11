@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/css/160425_techGif.min.css">
+  <title>gif</title>
+</head>
+
+<body style="background: #f0f0f0">
+  <div class="gif_main clearfix">
+    <div class="gif_left left">
+      <h1 class="gif_tag_name" id="gif_tag_name" style="display: none;"><em></em></h1>
+      <div class="gif_feed">
+        <div class="gif_feed_wrap" id="gif_feed_wrap" data-sudaclick="feed_list">
+
+          {% for gif in gifs %}
+          <div class="gif_feed_box">
+            <h2><a href="{{ gif.img_src }}" target="_blank">{{gif.name}}</a></h2>
+            <div class="gif_img">
+              <img src="{{ gif.img_src}}" alt="" class="feedImg"></a>
+            </div>
+
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/vendor/jquery-1.11.3.min.js"></script>
+<script>
+  $(function () {
+    $("img").each(function () {
+       var img = new Image();
+       img.src = $(this).attr('src');
+       $(this).height(parseInt(600*img.height/img.width));
+    });
+  });
+</script>
+
+</body>
+
+</html>
