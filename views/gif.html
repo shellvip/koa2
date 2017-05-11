@@ -32,7 +32,7 @@
   </div>
   <script src="/vendor/jquery-1.11.3.min.js"></script>
 <script>
-  $(function () {
+  $(window).on("load", function (){
     $("img").each(function () {
        var img = new Image();
        img.src = $(this).attr('src');
