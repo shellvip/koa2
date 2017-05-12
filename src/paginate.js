@@ -24,7 +24,7 @@ exports.makePaginator = function (currPage, totalItems) {
 
   let innerItems = []
   let startPgNum = Math.max(1, currPage - 3)
-  let endPgNum = Math.min(totalPages, startPgNum + 6)
+  let endPgNum = Math.min(totalPages, startPgNum + 4)
 
   if (currPage > 1) {
     innerItems.push({ text: 'Prev', href: `?page=${currPage - 1}`, kind: 'BUTTON' })
