@@ -54,11 +54,13 @@ function loadMessage() {
 // 404s in production
 router.get('/test', async (ctx) => {
   // ctx.assert(config.NODE_ENV === 'development', 404)
-  try {
-    await Gif.remove({}, { multi: true });
+  try {    
     var data = await rp('http://platform.sina.com.cn/slide/album?app_key=2733610594&format=json&ch_id=77&num=200&page=1');
     var gifs = JSON.parse(data);
     if (gifs.status.code == '0') {
+      
+      await Gif.remove({}, { multi: true });
+
       for (var gif of gifs.data) {
         var p = gif.img_url.split('/'),
             q = p.length;

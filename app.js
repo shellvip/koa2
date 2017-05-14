@@ -5,16 +5,18 @@ const requestSelf = async ()=>{
     await rp('https://appsc.herokuapp.com');
 };
 
-schedule.scheduleJob('30 */5 1-17 * * *', () => {
-    requestSelf();
+schedule.scheduleJob('30 */5 0-16 * * *', async () => {
+    await requestSelf();
 });
 
-const requestGif = async ()=>{
+const crawlGif = async ()=>{
+    console.log('crawl gif at: ' + new Date());
     await rp('https://appsc.herokuapp.com/test');
 };
 
-schedule.scheduleJob('0 1 1,5,11 * * *', () => {
-    requestGif();
+schedule.scheduleJob('0 1 1,6,11 * * *', async () => {
+    await crawlGif();
+    console.log('crawl gif ok at: ' + new Date());
 });
 
 
