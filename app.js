@@ -5,6 +5,7 @@ const crawl = require('./src/crawl');
 const requestSelf = async ()=>{
     console.log('request self at: ' + new Date());
     await rp('https://appsc.herokuapp.com');
+    await rp('https://appvv.herokuapp.com');
 };
 
 schedule.scheduleJob('30 */5 0-16 * * *', async () => {
