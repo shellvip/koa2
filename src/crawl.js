@@ -28,3 +28,23 @@ exports.crawlGif = async () => {
     }
 };
 
+exports.crawlAbc = async () => {
+
+    var options = {
+        uri: 'https://openbank.abchina.com/WXX_Inner/api/GetShopInfo/GetCouponByLatAndLng',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E233 MicroMessenger/6.6.6 NetType/WIFI Language/zh_CN'
+        },
+        method: 'POST',
+        json: true,
+        body: {
+            lng: 114.07,
+            lat: 22.62
+        }
+    };
+    try {
+        return await rp(options);
+    } catch (error) {
+        return error;
+    }
+};

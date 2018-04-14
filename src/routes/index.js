@@ -61,6 +61,14 @@ router.get('/test', async (ctx) => {
   }
 })
 
+router.get('/abc', async (ctx) => {
+  try {    
+    ctx.body = await crawl.crawlAbc();
+  } catch (error) {
+
+  }
+})
+
 router.get('/gif', async (ctx) => {
   ctx.validateQuery('page')
     .defaultTo(1)
